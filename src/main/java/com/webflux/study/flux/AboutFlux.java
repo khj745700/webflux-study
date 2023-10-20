@@ -3,6 +3,8 @@ package com.webflux.study.flux;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.time.Duration;
+
 public class AboutFlux {
     public static void main(String[] args) {
         Flux.just(6,9,13)
@@ -25,5 +27,10 @@ public class AboutFlux {
                         Flux.just("Uranus", "Neptune", "Pluto"))
                 .collectList() // collectionList() 를 사용하면 Publisher 에서 emit 하는 데이터를 모아서 하나의 List 로 만들어줌. 하나기 때문에 Mono 로 반환됨.
                 .subscribe(planets -> System.out.println(planets));
+
+        Flux
+                .fromArray(new Integer[]{1,2,3,4})
+                .delayElements(Duration.ofSeconds(1)) // delayElements 로 배열의 데이터가 1초마다 Emit 되도록 함.
+                .subscribe(System.out::println);
     }
 }
